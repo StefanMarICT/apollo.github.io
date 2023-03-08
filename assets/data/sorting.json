@@ -1,0 +1,22 @@
+[
+	{
+		"id":1,
+		"value":"price-low-to-high",
+		"name":"Price: low to high"
+	},
+	{
+		"id":2,
+		"value":"price-high-to-low",
+		"name":"Price: high to low"
+	},
+	{
+		"id":3,
+		"value":"name-low-to-high",
+		"name":"Name: A-Z"
+	},
+	{
+		"id":4,
+		"value":"name-high-to-low",
+		"name":"Name: Z-A"
+	}
+]

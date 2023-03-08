@@ -1,0 +1,44 @@
+[
+	{
+		"id":1,
+		"name":"Invictus",
+		"img":{
+			"src":"assets/img/invictus.jpg",
+			"alt":"Paco Rabanne Invictus edt 100ml"
+		},
+		"brandId":1,
+		"genderId":1,
+		"price":{
+				"new":125,
+				"old":90
+		}
+	},
+	{
+		"id":2,
+		"name":"Eros",
+		"img":{
+			"src":"assets/img/v_eros.jpg",
+			"alt":"Versace Eros edt 100ml"
+		},
+		"brandId":2,
+		"genderId":1,
+		"price":{
+				"new":110,
+				"old":89
+		}
+	},
+	{
+		"id":3,
+		"name":"Very good girl",
+		"img":{
+			"src":"assets/img/very_good_girl_w.jpg",
+			"alt":"Carolina Hererra-Very Good Girl edt 100ml"
+		},
+		"brandId":3,
+		"genderId":2,
+		"price":{
+				"new":100,
+				"old":null
+		}
+	}
+]

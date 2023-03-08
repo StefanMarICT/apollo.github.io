@@ -1,0 +1,27 @@
+[
+	{
+		"id":1,
+		"name":"Nearly free",
+		"value":20
+	},
+	{
+		"id":2,
+		"name":"Very cheap",
+		"value":35
+	},
+	{
+		"id":3,
+		"name":"Half priced",
+		"value":50
+	},
+	{
+		"id":4,
+		"name":"Good discount",
+		"value":70
+	},
+	{
+		"id":5,
+		"name":"No discount",
+		"value":100
+	}
+]

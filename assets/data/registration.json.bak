@@ -1,0 +1,30 @@
+[
+	{
+		"id":1,
+		"name":"firstName",
+		"site":"First name",
+		"value":"text",
+		"val":""
+	},
+	{
+		"id":2,
+		"name":"lastName",
+		"site":"Last name",
+		"value":"text",
+		"val":""
+	},
+	{
+		"id":3,
+		"name":"email",
+		"site":"Email",
+		"value":"text",
+		"val":""
+	},
+	{
+		"id":4,
+		"name":"btnSend",
+		"site":"Send",
+		"value":"button",
+		"val":"Send"
+	}
+]
