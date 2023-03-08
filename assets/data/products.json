@@ -39,6 +39,48 @@
 		"price":{
 				"new":100,
 				"old":null
-		}
+			}
+		},
+	{
+		"id":4,
+		"name":"212 VIP men",
+		"img":{
+			"src":"assets/img/212.jpg",
+			"alt":"Carolina Hererra-212 vip men edt 100ml"
+		},
+		"brandId":3,
+		"genderId":1,
+		"price":{
+				"new":160,
+				"old":100
+			}
+	},
+		{
+		"id":5,
+		"name":"Black Opium",
+		"img":{
+			"src":"assets/img/black_opium.jpg",
+			"alt":"YSL-Black opium 100ml"
+		},
+		"brandId":4,
+		"genderId":2,
+		"price":{
+				"new":120,
+				"old":40
+			}
+	},
+		{
+		"id":6,
+		"name":"Dylan Blue - women",
+		"img":{
+			"src":"assets/img/dylan_blue_w.jpg",
+			"alt":"Versace Dylan Blue women edp 100ml"
+		},
+		"brandId":2,
+		"genderId":2,
+		"price":{
+				"new":150,
+				"old":90
+			}
 	}
 ]
