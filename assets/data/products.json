@@ -82,5 +82,187 @@
 				"new":150,
 				"old":90
 			}
+	},
+	{
+		"id":7,
+		"name":"Linterdit",
+		"img":{
+			"src":"assets/img/linterdit.jpg",
+			"alt":"Givenchy Linterdit women edp 80ml"
+		},
+		"brandId":5,
+		"genderId":2,
+		"price":{
+				"new":200,
+				"old":null
+			}
+	},
+	{
+		"id":9,
+		"name":"Bad boy",
+		"img":{
+			"src":"assets/img/bad_boy.jpg",
+			"alt":"Carolina Hererra-Bad boy men edt 50ml"
+		},
+		"brandId":3,
+		"genderId":1,
+		"price":{
+				"new":80,
+				"old":55
+			}
+	},
+	{
+		"id":10,
+		"name":"Black opium int",
+		"img":{
+			"src":"assets/img/black_opium_int_w.jpg",
+			"alt":"YSL Black opium women edp 50ml"
+		},
+		"brandId":4,
+		"genderId":2,
+		"price":{
+				"new":110,
+				"old":47
+			}
+	},
+	{
+		"id":11,
+		"name":"Dylan Turquoise",
+		"img":{
+			"src":"assets/img/dylan_turquoise_w.jpg",
+			"alt":"Versace Dylan Turquoise women edp 100ml"
+		},
+		"brandId":2,
+		"genderId":2,
+		"price":{
+				"new":200,
+				"old":113
+			}
+	},
+	{
+		"id":12,
+		"name":"Eros Flame",
+		"img":{
+			"src":"assets/img/eros_flame.jpg",
+			"alt":"Versace Eros Flame men edp 200ml"
+		},
+		"brandId":2,
+		"genderId":1,
+		"price":{
+				"new":215,
+				"old":null
+			}
+	},
+	{
+		"id":13,
+		"name":"Gentleman",
+		"img":{
+			"src":"assets/img/gentleman.jpg",
+			"alt":"Givenchy Gentleman men edp 100ml"
+		},
+		"brandId":5,
+		"genderId":1,
+		"price":{
+				"new":220,
+				"old":199
+			}
+	},
+	{
+		"id":14,
+		"name":"Good girl New York",
+		"img":{
+			"src":"assets/img/good_girl_w.jpg",
+			"alt":"Carolina Hererra-Good girl New York women edp 80ml"
+		},
+		"brandId":5,
+		"genderId":2,
+		"price":{
+				"new":90,
+				"old":67
+			}
+	},
+	{
+		"id":15,
+		"name":"Lady million",
+		"img":{
+			"src":"assets/img/lady_million_w.jpg",
+			"alt":"Paco Rabanne Lady million women edp 50ml"
+		},
+		"brandId":1,
+		"genderId":2,
+		"price":{
+				"new":60,
+				"old":null
+			}
+	},
+	{
+		"id":16,
+		"name":"Mon Paris",
+		"img":{
+			"src":"assets/img/mon_paris_w.jpg",
+			"alt":"YSL Mon Paris women edp 90ml"
+		},
+		"brandId":4,
+		"genderId":2,
+		"price":{
+				"new":90,
+				"old":null
+			}
+	},
+	{
+		"id":17,
+		"name":"Phantom",
+		"img":{
+			"src":"assets/img/phantom.jpg",
+			"alt":"Paco Rabanne Phantom men edp 100ml"
+		},
+		"brandId":1,
+		"genderId":1,
+		"price":{
+				"new":115,
+				"old":null
+			}
+	},
+	{
+		"id":18,
+		"name":"Olympea",
+		"img":{
+			"src":"assets/img/olympea_w.jpg",
+			"alt":"Paco Rabanne Olympea women edp 90ml"
+		},
+		"brandId":1,
+		"genderId":2,
+		"price":{
+				"new":109,
+				"old":null
+			}
+	},
+	{
+		"id":19,
+		"name":"Pi",
+		"img":{
+			"src":"assets/img/pi.jpg",
+			"alt":"Givenchy Pi women edp 100ml"
+		},
+		"brandId":5,
+		"genderId":2,
+		"price":{
+				"new":279,
+				"old":249
+			}
+	},
+	{
+		"id":20,
+		"name":"One million",
+		"img":{
+			"src":"assets/img/one_million_m.jpg",
+			"alt":"Paco Rabanne One million men edp 100ml"
+		},
+		"brandId":1,
+		"genderId":1,
+		"price":{
+				"new":80,
+				"old":null
+			}
 	}
 ]
