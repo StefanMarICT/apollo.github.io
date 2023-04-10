@@ -224,7 +224,7 @@
 			}
 	},
 	{
-		"id":18,
+		"id":7,
 		"name":"Olympea",
 		"img":{
 			"src":"assets/img/olympea_w.jpg",
@@ -234,34 +234,6 @@
 		"genderId":2,
 		"price":{
 				"new":109,
-				"old":null
-			}
-	},
-	{
-		"id":19,
-		"name":"Pi",
-		"img":{
-			"src":"assets/img/pi.jpg",
-			"alt":"Givenchy Pi women edp 100ml"
-		},
-		"brandId":5,
-		"genderId":2,
-		"price":{
-				"new":279,
-				"old":249
-			}
-	},
-	{
-		"id":20,
-		"name":"One million",
-		"img":{
-			"src":"assets/img/one_million_m.jpg",
-			"alt":"Paco Rabanne One million men edp 100ml"
-		},
-		"brandId":1,
-		"genderId":1,
-		"price":{
-				"new":80,
 				"old":null
 			}
 	}

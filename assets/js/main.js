@@ -10,16 +10,13 @@
 		}*/
 		//LOADING
 		function loading(){
-			console.log("ne radi");
 			//window.onload=function(){
 				console.log("radim");
 				setTimeout(()=>{
 					$('.loading').remove()
-				}, 2500)
+				}, 2000)
 				//}
 			}
-		
-		
 		
 		//AJAX
 		
@@ -39,19 +36,33 @@
 		});
 		}
 		
+		function stockToLocStorage(item, data){
+			localStorage.setItem(item, JSON.stringify(data));
+		}
+		
+		function importFromLocStorage(item){
+			return JSON.parse(localStorage.getItem(item))
+		}
+		
 window.onload=function(){
 		loading();
 		callingAjax("navigation.json", showNavigation);
 		//callingAjax("products.json", getLocalStorageItem)
+		
 		//SHOW NAVIGATION
 		function showNavigation(items){
-			 let html='';
+			 let html='<ul>';
 			for(let index in items){
-			
-				html+=`
-					<div class="nav-items"><a href='${items[index].href}' id="">${items[index].name}</a></div>
+				if(index==4){
+					html+=`<li><div class="nav-items"><a href='#' id="my-bag">${items[index].name} <span id="items-in-cart">${showNumber()}</span></a></div></li>`;
+				}
+				else{
+					html+=`
+					<li><div class="nav-items"><a href='${items[index].href}' id="nav-${items[index].id}">${items[index].name}</a></div></li>
 				`;
+				}
 			}
+			html+=`</ul>`
 			$('#navigation').html(html);
 			
 			callingAjax("sorting.json", showDDL);
@@ -82,7 +93,7 @@ window.onload=function(){
 					   <input type="radio" value="${gender.id}" class="genderClass" name="gender"/> ${gender.name}
 					`;
 		});
-		console.log(html);
+		//console.log(html);
 		$('#gender').html(html);
 		gender = items;
 		$('genderClass').change(filterChange);
@@ -107,10 +118,12 @@ window.onload=function(){
 		function showItems(items){	
 			let html='';
 			console.log(items);
+			stockToLocStorage("allProducts", items);
+			importFromLocStorage(items);
 			
 			for(let index of items){
-				 html+=`<div class="col-lg-4 col-md-6 mb-4">
-            <div class="card h-100">
+				 html+=`<div class="col-4">
+            <div class="card">
               <a href="#"><img class="card-img-top" src="${index.img.src}" alt="${index.img.alt}"></a>
               <div class="card-body">
                 <h4 class="card-title">
@@ -126,25 +139,26 @@ window.onload=function(){
               </div>
 			  <div class="Shop">
 				<form>
-					<input type="button" id="Add" value="Add to cart"/>
+					<input type="button" data-id="${index.id}" class="Add" value="Add to cart"/>
 				</form>
 			  </div>
             </div>
           </div>`;
 			}
 			document.querySelector("#row").innerHTML=html;
+			$(".Add").click(addToCart);
 		}
 		callingAjax("prices.json", filterPrices);
+		
 		
 		//SHOW PRICES AND DISCOUNT
 		function showPrice(data){
 			let html='';
 			if(data.old !==null){
-				html+=`<h5><b>&euro; ${data.new}</b></h5>
-                <s>&euro; ${data.old}</s>`
+				html+=`<h5><b>&euro; ${data.new}</b></h5><s>&euro; ${data.old}</s>`
 			}
 			else {
-				html+=`<h5><b>&euro; ${data.new}</b></h5>`
+				html+=`<h5><b>&euro; ${data.new}</b></h5><br/>`
 			}
 			
 			return html;
@@ -346,7 +360,6 @@ window.onload=function(){
 		document.querySelector("#discount").addEventListener("change", filterDiscount);
 		
 		function filterDiscount(){
-			//console.log("maja me mnogo voli");
 			let selectedDiscount=$("#selectedDiscount").val();
 			var discount;
 			console.log(selectedDiscount);
@@ -356,7 +369,7 @@ window.onload=function(){
 				}
 				else if(item.price.old!=null){
 					discount=Math.round((item.price.old/item.price.new)*100);
-					console.log(discount);
+					//console.log(discount);
 				}
 				if(discount<selectedDiscount){
 					return item
@@ -367,7 +380,7 @@ window.onload=function(){
 		}
 		
 		//MY CART
-		console.log("radim li?");
+		/*console.log("radim li?");
 		function getLocalStorageItem(name){
 			let item = localStorage.getItem(name);
 				if(item){
@@ -381,5 +394,207 @@ window.onload=function(){
 				}
 		function myCart(){
 	
+		}*/
+		//numberOfItemsInBag();
+		
+		/*
+		
+		*/
+		
+		// LOCAL STORAGE
+		
+		var itemsInBag=importFromLocStorage("cart");
+		var productsFromStorage=importFromLocStorage("allProducts");
+		
+		
+		function addToCart(){
+			//console.log("pera");
+			var itemId = $(this).data("id");
+			//var itemsInBag=importFromLocStorage("cart");
+			console.log(itemId);
+			
+			console.log(itemsInBag);
+			if(itemsInBag==null){
+				sendToCart(itemId);
+			}
+			else{
+				if(itemInCart(itemsInBag, itemId)){
+					editNumber(itemId);
+				}
+				else{
+					exportToLocStorage(itemId);
+					showNumber();
+				}
+				
+			}
 		}
+		
+		//IF "MY CART" IS EMPTY, SEND THE FIRST ITEM TO LOCAL STORAGE
+		function sendToCart(selectedId){
+			var products=new Array();
+			products[0]={
+				id:selectedId,
+				pieces:1
+			};
+			stockToLocStorage("cart", products);
+		}
+		
+		//FUNCTION IS CHECKING IS SELECTED ITEM ALREADY IN "MY CART"
+
+		function itemInCart(items, id){
+			return items.filter(p=>p.id==id).length;
+		}
+		
+		//IF "MY CART" ALREADY HAVE THIS ITEM, CHANGE QUANTITY
+		function editNumber(selId){
+			//let itemsFromLocStorage=importFromLocStorage("cart");
+			
+			for(let items of itemsInBag){
+				if(items.id==selId)
+				{
+					items.pieces++;
+					break;
+				}
+			}
+			stockToLocStorage("cart", itemsInBag);
+		}
+		//NEXT ITEM TO CART
+		function exportToLocStorage(selectedId){
+			itemsInBag.push({
+				id:selectedId,
+				pieces:1
+			});
+			stockToLocStorage("cart", itemsInBag);
+		}
+		
+
+		//MY CART NUMBER OF ITEMS
+		function showNumber(){
+			console.log(itemsInBag);
+			if(itemsInBag==null){
+				return " ";
+			}
+			if(itemsInBag==0){
+				return 0;
+			}
+			else{
+				return itemsInBag.length;
+			}
+			//itemsInBag.length==null?myCartNumber.innerHTML="" : myCartNumber.innerHTML+=`${itemsInBag.length}`;
+			//itemsInBag.length!=null?console.log("nista"):console.log(itemsInBag.length);
+		}
+		
+		
+	
+		//MY CART FOR CLIENT
+		$(document).ready(function(){
+			if(itemsInBag!=null){
+				showPieces();
+			}
+			else{
+				bagIsEmpty();
+			}
+		});
+		
+		function bagIsEmpty(){
+			$("#my-cart").html("<p>Unfortunately, your bag is empty :-( </p>");
+			console.log("ne radimo danas");
+		}
+		
+		function showPieces(){
+			var orderedItems=productsFromStorage.filter(item=>{
+				for(let index of itemsInBag){
+					if(item.id==index.id){
+						item.pieces=index.pieces;
+						console.log(item.pieces);
+						return true;
+					}
+				}
+				
+				return false;
+			});
+			showBag(orderedItems);
+			totalCalculator();
+
+		}
+		
+		function showBag(items){
+			htm = `<table border="1px solid">
+					<thead>	
+						<tr>
+							<th>No</th>
+							<th>Product name</th>
+							<th>Price per unit</th>
+							<th>Units</th>
+							<th>Total price per product</th>
+						</tr>
+					</thead>
+					<tbody>`;
+			for(let index of items){
+				htm += `<tr>
+							<td>${index.id}</td>
+							<td>${index.name}</td> 
+							<td>${index.price.new}</td>
+							<td>${index.pieces}</td>
+							<td>${totalPerUnit(index.price.new, index.pieces)}</td>
+							<td><input type="button" onclick="" value="Remove"/></td>
+						</tr>`;
+			}
+			$("#my-cart").html("<p>"+htm+"</p><div class='total'></div>");
+		}
+		//TOTAL PRICE PER UNIT
+		function totalPerUnit(price, units) {
+			return price * units;
+		}
+		
+		//TOTAL PRICE
+		function totalCalculator(){
+			var totalPrice=0;
+			itemsInBag.forEach(index=>{
+					let item =productsFromStorage.filter(x=>x.id==index.id);
+					totalPrice=totalPrice+(item[0].price.new*index.pieces);
+					console.log(index.id+" "+totalPrice);
+			});
+			$(".total").html("<p>Total price: "+totalPrice+"</p>");		
+		}
+
+		//ITEMS IN BAG
+		
+		
+		//REMOVE FROM BAG
+	/*	function deleteFromBag(id){
+			console.log("brisanje radi");
+			var productsFromCart=importFromLocStorage("cart");
+			let filterItem=productsFromCart.filter(index=>index.id!=id);
+			
+			if(filterItem.length==0){ localStorage.clear;
+				stockToLocStorage("cart", filterItem);
+			console.log("i drufi deo radi");
+			showBag(filterItem)
+			}
+			
+		}
+*/
+			//ADD TO CART ITEM
+	/*	$(document).ready(function(){
+				$("#order").hide();
+				$(".Add").click(function(e){
+					console.log("dodato u korpu");
+					e.preventDefault();
+					$("#order").show("fast");
+				});
+					
+		});*/
+			//POP-UP MY CART
+		$(document).ready(function(){
+			console.log("ucitavam");
+			$("#my-cart").hide();
+			$("#my-bag").click(function(e){
+				console.log("reagujem");
+				e.preventDefault();
+				console.log("perica pera");
+				$("#my-cart").toggle("fast");
+			});
+		});
+		
 }
