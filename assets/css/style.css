@@ -46,17 +46,19 @@ input[type="range"] {
   width: 200px;
   margin: 0;
 }
-
-.loading { 
- width: 100%;  
- margin: 0px auto;
- background-color: #fff;  
- top: 0; 
- left: 0; 
- img { 
- width: 60%; 
- } 
- }
+#my-cart {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          width: 500px;
+          height: 200px;
+          text-align: center;
+          background-color: #e8eae6;
+          box-sizing: border-box;
+          padding: 10px;
+          z-index: 100;
+}
  
 .danger{
 	border:2px solid red;
