@@ -10,6 +10,7 @@
 		<div id="navigation"></div>
 		<div id="main">
 			<div id="my-cart"></div>
+			<div id="order"><!--You have successfully added item to cart--></div>
 			<div class="class-left">
 				<div id="search">
 				</div>
