@@ -126,10 +126,10 @@ window.onload=function(){
             <div class="card">
               <a href="#"><img class="card-img-top" src="${index.img.src}" alt="${index.img.alt}"></a>
               <div class="card-body">
-                <h4 class="card-title">
-				  <h2>${showBrandOrGender(index.brandId, brands)}</h2>
-                  <a href="#">${index.name}</a>
-                </h4>
+                <div class="card-title">
+				  <h3>${showBrandOrGender(index.brandId, brands)}</h3>
+                  <h2><b>${index.name}</b></h2>
+                </div>
 				<h5>${showBrandOrGender(index.genderId, gender)}</h5>
 				<p class="ab"></p></h6>
 				${showPrice(index.price)}
@@ -569,7 +569,7 @@ window.onload=function(){
 			
 			if(filterItem.length==0){ localStorage.clear;
 				stockToLocStorage("cart", filterItem);
-			console.log("i drufi deo radi");
+			console.log("i drugi deo radi");
 			showBag(filterItem)
 			}
 			
@@ -592,7 +592,6 @@ window.onload=function(){
 			$("#my-bag").click(function(e){
 				console.log("reagujem");
 				e.preventDefault();
-				console.log("perica pera");
 				$("#my-cart").toggle("fast");
 			});
 		});
