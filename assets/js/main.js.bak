@@ -10,7 +10,6 @@
 		}*/
 		//LOADING
 		function loading(){
-			console.log("ne radi");
 			//window.onload=function(){
 				console.log("radim");
 				setTimeout(()=>{
@@ -55,7 +54,7 @@ window.onload=function(){
 			 let html='<ul>';
 			for(let index in items){
 				if(index==4){
-					html+=`<li><div class="nav-items"><a href='#' id="nav-${items[index].id}">${items[index].name} <span id="items-in-cart">${showNumber()}</span></a></div></li>`;
+					html+=`<li><div class="nav-items"><a href='#' id="my-bag">${items[index].name} <span id="items-in-cart">${showNumber()}</span></a></div></li>`;
 				}
 				else{
 					html+=`
@@ -127,10 +126,10 @@ window.onload=function(){
             <div class="card">
               <a href="#"><img class="card-img-top" src="${index.img.src}" alt="${index.img.alt}"></a>
               <div class="card-body">
-                <h4 class="card-title">
-				  <h2>${showBrandOrGender(index.brandId, brands)}</h2>
-                  <a href="#">${index.name}</a>
-                </h4>
+                <div class="card-title">
+				  <h3>${showBrandOrGender(index.brandId, brands)}</h3>
+                  <h2><b>${index.name}</b></h2>
+                </div>
 				<h5>${showBrandOrGender(index.genderId, gender)}</h5>
 				<p class="ab"></p></h6>
 				${showPrice(index.price)}
@@ -156,11 +155,10 @@ window.onload=function(){
 		function showPrice(data){
 			let html='';
 			if(data.old !==null){
-				html+=`<h5><b>&euro; ${data.new}</b></h5>
-                <s>&euro; ${data.old}</s>`
+				html+=`<h5><b>&euro; ${data.new}</b></h5><s>&euro; ${data.old}</s>`
 			}
 			else {
-				html+=`<h5><b>&euro; ${data.new}</b></h5>`
+				html+=`<h5><b>&euro; ${data.new}</b></h5><br/>`
 			}
 			
 			return html;
@@ -371,7 +369,7 @@ window.onload=function(){
 				}
 				else if(item.price.old!=null){
 					discount=Math.round((item.price.old/item.price.new)*100);
-					console.log(discount);
+					//console.log(discount);
 				}
 				if(discount<selectedDiscount){
 					return item
@@ -577,14 +575,22 @@ window.onload=function(){
 			
 		}
 */
-$(".Add").click(popUp());
-function popUp(){
-	console.log("You have successfully added item to cart");
-}
+			//ADD TO CART ITEM
+	/*	$(document).ready(function(){
+				$("#order").hide();
+				$(".Add").click(function(e){
+					console.log("dodato u korpu");
+					e.preventDefault();
+					$("#order").show("fast");
+				});
+					
+		});*/
 			//POP-UP MY CART
 		$(document).ready(function(){
+			console.log("ucitavam");
 			$("#my-cart").hide();
-			$("#navigation #nav-5").click(function(e){
+			$("#my-bag").click(function(e){
+				console.log("reagujem");
 				e.preventDefault();
 				console.log("perica pera");
 				$("#my-cart").toggle("fast");

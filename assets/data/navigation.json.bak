@@ -15,7 +15,12 @@
 		"href":"#"
 	},
 	{
-		"id":2,
+		"id":4,
+		"name":"Contact us",
+		"href":"contact.html"
+	},
+	{
+		"id":5,
 		"name":"My Cart",
 		"href":"#"
 	}

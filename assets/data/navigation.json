@@ -2,7 +2,7 @@
 	{
 		"id":1,
 		"name":"Products",
-		"href":"#"
+		"href":"#row"
 	},
 	{
 		"id":2,
@@ -12,7 +12,7 @@
 	{
 		"id":3,
 		"name":"Author",
-		"href":"#"
+		"href":"author.html"
 	},
 	{
 		"id":4,
