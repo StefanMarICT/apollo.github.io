@@ -44,7 +44,7 @@ function loading(){
 	
 		loading();
 		
-		if(url=="/index.html"|| "/" || "/#"){
+		if(url=="/index.html"){
 			callingAjax("navigation.json", showNavigation);
 			callingAjax("sorting.json", showDDL);
 			callingAjax("gender.json", showGender);
@@ -72,8 +72,11 @@ function loading(){
 			 <div id="nav"><ul>`;
 			for(let index in items){
 				if(index==4){
-					html+=`<li><div id="my-bag"><i class="fa fa-shopping-cart" aria-hidden="true"></i><span id="items-in-cart"></span></div></li>`;
+					html+=`<li><div id="my-bag"><i id="pera2" class="fa fa-shopping-cart" aria-hidden="true"></i><span id="items-in-cart"></span></div></li>`;
 				}
+				/*if(index==1&&url!="/index.html"){
+					html+=`<li><a href='index.html' class="nav-item nav-link active" id="nav-${items[index].id}"> ${items[index].name} </a></li>`;
+				}*/
 				else{
 					html+=`
 					<li><a href='${items[index].href}' class="nav-item nav-link active" id="nav-${items[index].id}"> ${items[index].name} </a></li>
@@ -82,7 +85,8 @@ function loading(){
 			}
 			html+=`</ul></div><div class="cleaner"></div>`
 			$('#navigation').html(html);
-			
+			$("#pera2").click(pera);
+			printNumberOfProducts();
 			
 		}
 		
@@ -107,21 +111,23 @@ function loading(){
 			}
 			//html+=`</select>`
 			$('#sorted').html(html);
+			$('#sorted').change(showItems);
 		}
 		
 		//SHOW GENDER
 		
 		function showGender (items){
-		let html = "<input type='radio' value='0' class='genderClass' name='gender'/> all";
+		let html = "<input type='radio' value='0' class='genderClass' name='gender' checked/> all";
 		items.forEach(gender => {
 			html += `
-					   <input type="radio" value="${gender.id}" id="sort-gender-${gender.id}" class="genderClass" name="sort-gender"/> ${gender.name}
+					   <input type="radio" value="${gender.id}" id="sort-gender-${gender.id}" class="genderClass" name="gender"/> ${gender.name}
 					`;
 		});
 		//console.log(html);
 		$('#gender').html(html);
 		gender = items;
-		$('genderClass').change(filterChange);
+		document.getElementById("gender").addEventListener("change", showItems);
+		//$('genderClass').change(filterChange);
 	}
 		
 		//SHOW BRANDS
@@ -137,6 +143,7 @@ function loading(){
 			html+=`</label>`;
 			$("#brands").html(html);
 			callingAjax("products.json", showItems);
+			document.querySelector("#brands").addEventListener('click', showItems);
 		}
 		
 		//SHOW PRODUCTS
@@ -144,12 +151,17 @@ function loading(){
 			let html='';
 			stockToLocStorage("allProducts", items);
 			importFromLocStorage(items);
+			items=searchItems(items);
+			items=sort(items);
+			items=filterDiscount(items);
+			items=brandFilter(items);
+			items=genderFilter(items);
 			
+			console.log(items);
 			if(items.length==0){
 				html+=`<div class="col-4 mx-auto text-center">
 							<p class="alert alert-danger my-3">No products :-(</p>
 						</div>`;
-				
 			}
 			else{
 			for(let index of items){
@@ -175,6 +187,8 @@ function loading(){
 			}}
 			document.querySelector("#row").innerHTML=html;
 			$(".Add").click(addToCart);
+			$(".Add").click(myCart);
+			myCart();
 		}
 		
 		
@@ -213,6 +227,7 @@ function loading(){
 				  </form>
 				  <br/>`;
 			document.querySelector("#search").innerHTML=html;
+			btnSearch.addEventListener("click", showItems);
 		}
 		showSearch();
 
@@ -230,21 +245,22 @@ function loading(){
 				}
 				html+="</datalist></form>"
 				$("#discount").html(html);
+				document.querySelector("#discount").addEventListener("change", showItems);
 		}
 				
-		 function filterChange(){
+	/*	 function filterChange(){
 		callingAjax("products.json", showItems);
 		
-		}
+		}*/
 
 		//SORTING PRODUCTS BY IT'S NAME AND PRICE: ASC, DESC
-		sorted.addEventListener('change', sort);
+		
 		function sort(items){
 			const sortType=$("#sorted").val();
 			console.log(sortType);
 
 			if(sortType=="name-low-to-high"){
-				artikli.sort(function(item1,item2){
+				items.sort(function(item1,item2){
 					if(item1.name>item2.name){
 						return 1;
 					}
@@ -254,11 +270,11 @@ function loading(){
 					if(item1.name==item2.name){
 						return 0;
 					}
-					console.log(artikli);
+					console.log(items);
 				});
 			}
 				else if(sortType=="name-high-to-low"){
-					artikli.sort(function(item1,item2){
+					items.sort(function(item1,item2){
 					if(item1.name<item2.name){
 						return 1;
 					}
@@ -268,71 +284,72 @@ function loading(){
 					if(item1.name==item2.name){
 						return 0;
 					}
-					console.log(artikli);
+					console.log(items);
 				});
 				}
 				else if(sortType=="price-low-to-high"){
-					artikli.sort(function(item1,item2){
+					items.sort(function(item1,item2){
 					if(item1.price.new>item2.price.new){
 						return 1;
 					}
 					if(item1.price.new<item2.price.new){
 						return -1;
 					}
-					if(item1.price.new=item2.price.new){
+					if(item1.price.new==item2.price.new){
 						return 0;
 					}
-					console.log(artikli);
+					console.log(items);
 				});
 				}
 				else if(sortType=="price-high-to-low"){
-					artikli.sort(function(item1,item2){
+					items.sort(function(item1,item2){
 					if(item1.price.new>item2.price.new){
 						return -1;
 					}
 					if(item1.price.new<item2.price.new){
 						return 1;
 					}
-					if(item1.price.new=item2.price.new){
+					if(item1.price.new==item2.price.new){
 						return 0;
 					}
-					console.log(artikli);
+					console.log(items);
 				});
 				}
 				else{
-					artikli.sort(function(item1,item2){
+					items.sort(function(item1,item2){
 					if(item1.id<item2.id){
 						return -1;
 					}
 					if(item1.id<item2.id){
 						return 1;
 					}
-					if(item1.id=item2.id){
+					if(item1.id==item2.id){
 						return 0;
 					}
-					console.log(artikli);
+					console.log(items);
 				});
 				}
-				showItems(artikli);
+				return items;
 		}
 		
 		//FILTER FUNCTIONS
 		
 		//BY BRAND
-		document.querySelector("#brands").addEventListener('click', brandFilter);
 		
-		function brandFilter(){
+		
+		function brandFilter(items){
+			let filteredItems;
 			let selectBrand=$('.brand:checked').val();
 		let selectedBrand = [];
 		$('.brand:checked').each(function(item){
 			selectedBrand.push(parseInt($(this).val()));
-			console.log(selectedBrand);
+			//console.log(selectedBrand);
 		});
-		console.log(selectedBrand.length);
+		//console.log(selectedBrand.length);
 		if(selectedBrand.length != 0){
-			console.log(selectedBrand.length);
-			console.log(artikli);
-			artiklifilter=artikli.filter(function(item){
+			//console.log(selectedBrand.length);
+			//console.log(artikli);
+			filteredItems=items.filter(function(item){
 				for(var index of selectedBrand)
 				if(index==item.brandId){
 					return item;
@@ -340,9 +357,9 @@ function loading(){
 			});
 		}
 		if(selectedBrand==0){
-				artiklifilter=artikli;
+				filteredItems=items;
 			}
-		showItems(artiklifilter);
+		return filteredItems;
 		
 	}
 		
@@ -350,60 +367,60 @@ function loading(){
 		//BY GENDER
 		//var selectedGender=LocalStorage.getItem("sortedValue-gender");
 		//console.log(selectedGender);
-		document.getElementById("gender").addEventListener("change", genderFilter);
-		function genderFilter(){
+		
+		function genderFilter(items){
+			let filteredItems;
 			//var selectedGender=LocalStorage.getItem("sortedValue-gender");
 			let selectedGender=$(".genderClass:checked").val();
 			//let selectedGender=[];
 			if(selectedGender==0){
-				artiklifilter=artikli;
+				filteredItems=items;
 			}
 			else{
-			artiklifilter=artikli.filter(function(item){
+			filteredItems=items.filter(function(item){
 				if(selectedGender==item.genderId){
 					return item;
 				}
 			});
 			}
-			console.log(selectedGender);
-			showItems(artiklifilter);
+			return filteredItems;
 		}
 		
 		//BY SEARCH
-		btnSearch.addEventListener("click", searchItems);
 		
-		function searchItems(){
+		
+		function searchItems(items){
 			let writtenWord =$("#txSearch").val();
-			console.log(writtenWord);
+			//console.log(writtenWord);
 			let filteredItems = artikli.filter(function(item){
 				if(item.name.toLowerCase().indexOf(writtenWord.trim().toLowerCase())!=-1){
 					return item;
 				}
 			});
-			showItems(filteredItems);
+			return filteredItems;
+			//showItems(filteredItems);
 		}
 		
 		//BY DISCOUNT
 		
-		document.querySelector("#discount").addEventListener("change", filterDiscount);
 		
-		function filterDiscount(){
+		
+		function filterDiscount(items){
 			let selectedDiscount=$("#selectedDiscount").val();
 			var discount;
-			console.log(selectedDiscount);
-			let filteredItems=artikli.filter(function(item){
+			//console.log(selectedDiscount);
+			let filteredItems=items.filter(function(item){
 				if(item.price.old==null){
 					discount=100;
 				}
 				else if(item.price.old!=null){
 					discount=Math.round((item.price.new/item.price.old)*100);
-					console.log(discount);
 				}
 				if(discount<=selectedDiscount){
 					return item
 				}
 			});
-			showItems(filteredItems);
+			return filteredItems;
 			
 		}
 		
@@ -451,10 +468,10 @@ function loading(){
 		
 		$("#gender").click(stockSortedValues);*/
 		//$("#brands").click(stockSortedValue(sort-brand, "brand"));
-	myCart();
+	
 	function myCart(){
     let productsInCart = importFromLStorage("cart");
-        
+        console.log("kliknuli smo sad");
         if(productsInCart == null){
             EmptyCart();
         }
@@ -471,7 +488,7 @@ function EmptyCart(){
 function showCart(){
     let allProducts = importFromLStorage("allProducts");
     let productsInCart = importFromLStorage("cart");
-
+	console.log("kod radi");
     let productsForDisplay = allProducts.filter(el => {
         for(let pCart of productsInCart){
             if(el.id == pCart.id){
@@ -480,13 +497,15 @@ function showCart(){
             }
         }
         return false;
+		
     })
 	console.log(productsForDisplay);
     printTable(productsForDisplay);
 }
 function printTable(products){
     //console.log(products);
-    let html = `<table class="timetable_sub">
+    let html = `<div id="close"><button id="closing">x</button></div><div class="cleaner"></div>
+	<table class="timetable_sub">
     <thead>
         <tr>
             <th>No.</th>
@@ -508,14 +527,25 @@ function printTable(products){
 
     html +=`    </tbody>
     </table>
-	<div id="total-price"></div>`;
+	<div id="total-price"></div>
+	<button id="emptyCart">Empty Cart</button>`;
 	console.log("I work :)");
 	let htmlTotal=`<p>Total price:<b>${total} &euro;</b></p>`;
     $("#my-cart").html(html);
     $(".btn-remove").click(removeFromCart);
     $("#total-price").html(htmlTotal);
+	$("#closing").click(function(){
+	$("#my-cart").toggle("fast");
+	});
+	$("#emptyCart").click(removeAll);
 }
 
+function removeAll(){
+	console.log("radi brisanje");
+	localStorage.removeItem("cart");
+	myCart();
+	printNumberOfProducts();
+}
 function removeFromCart(){
     let productId = $(this).data("id");
 
@@ -528,7 +558,9 @@ function removeFromCart(){
     else{
         stockToLStorage("cart", filtered);
     }
+	
     myCart();
+	printNumberOfProducts();
 }
 function generateTr(p){
     return  `<tr class="cart-item">
@@ -552,10 +584,10 @@ function generateTr(p){
 
 function addToCart(){
     let productId = $(this).data("id");
-    // console.log(idP)
+     //console.log(productId);
 
     let productsInCart =importFromLStorage("cart");
-
+	console.log(productsInCart);
     if(productsInCart == null){
         addFirstItemToCart();
         printNumberOfProducts();
@@ -568,6 +600,7 @@ function addToCart(){
             addItemToCart();
             printNumberOfProducts();
         }
+		
     }
 
 
@@ -614,7 +647,7 @@ function printNumberOfProducts(){
     let productsInCart = importFromLStorage("cart");
 
     if(productsInCart == null){
-		let html=" ";
+		let html="";
         $("#items-in-cart").html(html);
     }
     else{
@@ -626,7 +659,8 @@ function printNumberOfProducts(){
 			//POP-UP MY CART
 			//console.log("ucitavam");
 		$("#my-cart").hide();
-		$("#navigation").click(pera);
+		//$("#pera2").click(pera);
+		//$("#closing").click(pera);
 			//$("#my-cart").hide();
 		function pera(){
 				console.log("reagujem");
@@ -694,7 +728,7 @@ function showRegistration(items){
 					<div id="counting">0/250</div>
 				</div>
 					<input type="button" id="btnSend" value="Send"/>
-				</form><br/>
+				</form>
 				</div>
 				<div class="cleaner"></div>`;
 			$("#main").html(html);
