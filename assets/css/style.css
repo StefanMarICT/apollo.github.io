@@ -192,6 +192,14 @@ input[type="range"] {
 			
             /*visibility: hidden;*/
 }
+#close{
+	padding-bottom:10px;
+	width:100%;
+}
+#closing{
+	float:right;
+	padding:5px;
+}
 .popUp .show{
 	visibility:visible;
 	-webkit-animation: fadeIn 1s;
@@ -276,10 +284,10 @@ input[type="range"] {
 }
 
 #imageAuthor img{
-	max-width:25%;
+	max-width:30%;
 	border-radius: 100%;
 	float:right;
-	padding:10px;
+	padding:20px;
 	margin-right:20px;
 }
 
