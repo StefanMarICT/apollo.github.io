@@ -44,7 +44,7 @@ function loading(){
 	
 		loading();
 		
-		if(url=="/index.html"){
+		if(url=="/index.html"||url=="/"){
 			callingAjax("navigation.json", showNavigation);
 			callingAjax("sorting.json", showDDL);
 			callingAjax("gender.json", showGender);
