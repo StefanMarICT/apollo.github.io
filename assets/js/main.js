@@ -171,7 +171,7 @@ function loading(){
 				</form>
 			  </div>
             </div>
-          </div>`;
+          </div><div class="cleaner"></div>`;
 			}}
 			document.querySelector("#row").innerHTML=html;
 			$(".Add").click(addToCart);
