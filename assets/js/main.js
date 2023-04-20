@@ -1,24 +1,5 @@
 		
-		//var artikli=[];
-		/*var gender=[];
-		var brands=[];*/
-		/*function getLocalStorageItem(name, item){
-			localStorage.setItem(name,JSON.stringify(item));
-		}
-		function readLocalStorageItem(name){
-			return JSON.parse(localStorage.getItem(name));
-		}*/
-		//LOADING
-		function loading(){
-			//window.onload=function(){
-				console.log("radim");
-				setTimeout(()=>{
-					$('.loading').remove()
-				}, 2000)
-				//}
-			}
-		
-		//AJAX
+		// 1.0 AJAX
 		
 		function callingAjax(data, ifItWorks){
 		$.ajax({
@@ -43,29 +24,76 @@
 		function importFromLocStorage(item){
 			return JSON.parse(localStorage.getItem(item))
 		}
-		
-window.onload=function(){
+	var url=window.location.pathname;
+	console.log(url);
+	url=url.substring(url.lastIndexOf('/'));
+	
+	
+//window.onload=function(){
+	
+$(document).ready(function(){
+	//LOADING
+function loading(){
+			//window.onload=function(){
+	console.log("radim");
+	setTimeout(()=>{
+					$('.loading').remove()
+				   }, 2000)
+				//}
+	}
+	
 		loading();
+		
+		if(url=="/index.html"){
+			callingAjax("navigation.json", showNavigation);
+			callingAjax("sorting.json", showDDL);
+			callingAjax("gender.json", showGender);
+			callingAjax("brands.json", showBrands); 
+			callingAjax("prices.json", filterPrices);
+			callingAjax("footer.json", showFooter);
+		}
+		if(url=="/contact.html"){
 		callingAjax("navigation.json", showNavigation);
+		callingAjax("footer.json", showFooter);
+		callingAjax("registration.json", showRegistration);
+		}
+		if(url=="/author.html"){
+			callingAjax("navigation.json", showNavigation);
+			callingAjax("footer.json",showFooter);
+		}
+		
+		
+		//callingAjax("products.json", showItems);
 		//callingAjax("products.json", getLocalStorageItem)
 		
 		//SHOW NAVIGATION
 		function showNavigation(items){
-			 let html='<ul>';
+			 let html=`<div id="logo"><a href="index.html"><img src="assets/img/logo.png" alt="company logo"/></a></div>
+			 <div id="nav"><ul>`;
 			for(let index in items){
 				if(index==4){
-					html+=`<li><div class="nav-items"><a href='#' id="my-bag">${items[index].name} <span id="items-in-cart">${showNumber()}</span></a></div></li>`;
+					html+=`<li><div id="my-bag"><i class="fa fa-shopping-cart" aria-hidden="true"></i><span id="items-in-cart"></span></div></li>`;
 				}
 				else{
 					html+=`
-					<li><div class="nav-items"><a href='${items[index].href}' id="nav-${items[index].id}">${items[index].name}</a></div></li>
+					<li><a href='${items[index].href}' class="nav-item nav-link active" id="nav-${items[index].id}"> ${items[index].name} </a></li>
 				`;
 				}
 			}
-			html+=`</ul>`
+			html+=`</ul></div><div class="cleaner"></div>`
 			$('#navigation').html(html);
 			
-			callingAjax("sorting.json", showDDL);
+			
+		}
+		
+		//SHOW FOOTER
+		function showFooter(items){
+			let html="<ul>";
+			for (let index of items){
+				html+=`<li><a href="${index.link}"> <i class="${index.icons}"></i></a>|</li>`;
+			}
+			html+="</ul>";
+			$('#links').html(html);
 		}
 		
 		//SHOW DROPDOWN LIST 
@@ -79,9 +107,6 @@ window.onload=function(){
 			}
 			//html+=`</select>`
 			$('#sorted').html(html);
-			
-		  
-		   callingAjax("gender.json", showGender);
 		}
 		
 		//SHOW GENDER
@@ -90,26 +115,26 @@ window.onload=function(){
 		let html = "<input type='radio' value='0' class='genderClass' name='gender'/> all";
 		items.forEach(gender => {
 			html += `
-					   <input type="radio" value="${gender.id}" class="genderClass" name="gender"/> ${gender.name}
+					   <input type="radio" value="${gender.id}" id="sort-gender-${gender.id}" class="genderClass" name="sort-gender"/> ${gender.name}
 					`;
 		});
 		//console.log(html);
 		$('#gender').html(html);
 		gender = items;
 		$('genderClass').change(filterChange);
-		callingAjax("brands.json", showBrands); 
 	}
 		
 		//SHOW BRANDS
 		
 		function showBrands(data){
-			let html="";
+			let html="<label class='checkbox' for='checkboxId'>Brands:";
 			brands=data;
 			for(let index in data){
 				html += `
-					   <input type="checkbox" value="${data[index].id}" class="brand" name="brands"/> ${data[index].name}
+					   <br/><input type="checkbox" id="sort-brand-${index.id}" value="${data[index].id}" class="brand" name="sort-brand-${index.id}"/><label for="sort-brand-${index.id}">${data[index].name}
 					`;
 			}
+			html+=`</label>`;
 			$("#brands").html(html);
 			callingAjax("products.json", showItems);
 		}
@@ -117,25 +142,28 @@ window.onload=function(){
 		//SHOW PRODUCTS
 		function showItems(items){	
 			let html='';
-			console.log(items);
 			stockToLocStorage("allProducts", items);
 			importFromLocStorage(items);
 			
+			if(items.length==0){
+				html+=`<div class="col-4 mx-auto text-center">
+							<p class="alert alert-danger my-3">No products :-(</p>
+						</div>`;
+				
+			}
+			else{
 			for(let index of items){
-				 html+=`<div class="col-4">
+				 html+=`<div class="col-3">
             <div class="card">
-              <a href="#"><img class="card-img-top" src="${index.img.src}" alt="${index.img.alt}"></a>
+              <img class="card-img-top" src="${index.img.src}" alt="${index.img.alt}">
               <div class="card-body">
                 <div class="card-title">
 				  <h3>${showBrandOrGender(index.brandId, brands)}</h3>
                   <h2><b>${index.name}</b></h2>
                 </div>
 				<h5>${showBrandOrGender(index.genderId, gender)}</h5>
-				<p class="ab"></p></h6>
+				<p class="ab"></p>
 				${showPrice(index.price)}
-				<p class="card-text">
-                </p>
-               <p class="card-text"></p>
               </div>
 			  <div class="Shop">
 				<form>
@@ -144,21 +172,20 @@ window.onload=function(){
 			  </div>
             </div>
           </div>`;
-			}
+			}}
 			document.querySelector("#row").innerHTML=html;
 			$(".Add").click(addToCart);
 		}
-		callingAjax("prices.json", filterPrices);
 		
 		
 		//SHOW PRICES AND DISCOUNT
 		function showPrice(data){
 			let html='';
 			if(data.old !==null){
-				html+=`<h5><b>&euro; ${data.new}</b></h5><s>&euro; ${data.old}</s>`
+				html+=`<h4><b>&euro; ${data.new}</b></h4><s>&euro; ${data.old}</s>`
 			}
 			else {
-				html+=`<h5><b>&euro; ${data.new}</b></h5><br/>`
+				html+=`<h4><b>&euro; ${data.new}</b></h4><br/>`
 			}
 			
 			return html;
@@ -175,13 +202,6 @@ window.onload=function(){
 			}
 		}
 
-		
-		 function filterChange(){
-		callingAjax("products.json", showItems);
-		}
-
-		console.log("da li radi?");
-		
 		//SHOW SEARCH
 		function showSearch(){
 			var html;
@@ -195,7 +215,7 @@ window.onload=function(){
 			document.querySelector("#search").innerHTML=html;
 		}
 		showSearch();
-		
+
 		//SHOW FILTER PRICES
 		function filterPrices(items){
 				let html=`<label for="itemPrices">Sort by discount<label><br/>
@@ -211,7 +231,12 @@ window.onload=function(){
 				html+="</datalist></form>"
 				$("#discount").html(html);
 		}
+				
+		 function filterChange(){
+		callingAjax("products.json", showItems);
 		
+		}
+
 		//SORTING PRODUCTS BY IT'S NAME AND PRICE: ASC, DESC
 		sorted.addEventListener('change', sort);
 		function sort(items){
@@ -310,7 +335,6 @@ window.onload=function(){
 			artiklifilter=artikli.filter(function(item){
 				for(var index of selectedBrand)
 				if(index==item.brandId){
-					console.log(item);
 					return item;
 				}
 			});
@@ -321,10 +345,14 @@ window.onload=function(){
 		showItems(artiklifilter);
 		
 	}
-		//BY GENDER
 		
+	
+		//BY GENDER
+		//var selectedGender=LocalStorage.getItem("sortedValue-gender");
+		//console.log(selectedGender);
 		document.getElementById("gender").addEventListener("change", genderFilter);
 		function genderFilter(){
+			//var selectedGender=LocalStorage.getItem("sortedValue-gender");
 			let selectedGender=$(".genderClass:checked").val();
 			//let selectedGender=[];
 			if(selectedGender==0){
@@ -368,10 +396,10 @@ window.onload=function(){
 					discount=100;
 				}
 				else if(item.price.old!=null){
-					discount=Math.round((item.price.old/item.price.new)*100);
-					//console.log(discount);
+					discount=Math.round((item.price.new/item.price.old)*100);
+					console.log(discount);
 				}
-				if(discount<selectedDiscount){
+				if(discount<=selectedDiscount){
 					return item
 				}
 			});
@@ -403,197 +431,337 @@ window.onload=function(){
 		
 		// LOCAL STORAGE
 		
-		var itemsInBag=importFromLocStorage("cart");
-		var productsFromStorage=importFromLocStorage("allProducts");
-		
-		
-		function addToCart(){
-			//console.log("pera");
-			var itemId = $(this).data("id");
-			//var itemsInBag=importFromLocStorage("cart");
-			console.log(itemId);
-			
-			console.log(itemsInBag);
-			if(itemsInBag==null){
-				sendToCart(itemId);
+		//VARIABLES
+		//var itemsInBag=importFromLocStorage("cart");
+		//var productsFromStorage=importFromLocStorage("allProducts");
+		function stockToLStorage(key, value){
+				localStorage.setItem(key, JSON.stringify(value));
 			}
-			else{
-				if(itemInCart(itemsInBag, itemId)){
-					editNumber(itemId);
-				}
-				else{
-					exportToLocStorage(itemId);
-					showNumber();
-				}
-				
+		function importFromLStorage(key){
+				return JSON.parse(localStorage.getItem(key));
 			}
+		//FILTER AND SORT
+		
+		//document.querySelector(".genderClass").addEventListener("click", stockSortedValues(sort-gender));
+		/*function stockSortedValues(){
+			var sortedValue=$('input[name="sort-gender"]:checked').val();
+			console.log(sortedValue);
+			localStorage.setItem("sortedValue-gender", sortedValue);
 		}
 		
-		//IF "MY CART" IS EMPTY, SEND THE FIRST ITEM TO LOCAL STORAGE
-		function sendToCart(selectedId){
-			var products=new Array();
-			products[0]={
-				id:selectedId,
-				pieces:1
-			};
-			stockToLocStorage("cart", products);
-		}
-		
-		//FUNCTION IS CHECKING IS SELECTED ITEM ALREADY IN "MY CART"
-
-		function itemInCart(items, id){
-			return items.filter(p=>p.id==id).length;
-		}
-		
-		//IF "MY CART" ALREADY HAVE THIS ITEM, CHANGE QUANTITY
-		function editNumber(selId){
-			//let itemsFromLocStorage=importFromLocStorage("cart");
-			
-			for(let items of itemsInBag){
-				if(items.id==selId)
-				{
-					items.pieces++;
-					break;
-				}
-			}
-			stockToLocStorage("cart", itemsInBag);
-		}
-		//NEXT ITEM TO CART
-		function exportToLocStorage(selectedId){
-			itemsInBag.push({
-				id:selectedId,
-				pieces:1
-			});
-			stockToLocStorage("cart", itemsInBag);
-		}
-		
-
-		//MY CART NUMBER OF ITEMS
-		function showNumber(){
-			console.log(itemsInBag);
-			if(itemsInBag==null){
-				return " ";
-			}
-			if(itemsInBag==0){
-				return 0;
-			}
-			else{
-				return itemsInBag.length;
-			}
-			//itemsInBag.length==null?myCartNumber.innerHTML="" : myCartNumber.innerHTML+=`${itemsInBag.length}`;
-			//itemsInBag.length!=null?console.log("nista"):console.log(itemsInBag.length);
-		}
-		
-		
-	
-		//MY CART FOR CLIENT
-		$(document).ready(function(){
-			if(itemsInBag!=null){
-				showPieces();
-			}
-			else{
-				bagIsEmpty();
-			}
-		});
-		
-		function bagIsEmpty(){
-			$("#my-cart").html("<p>Unfortunately, your bag is empty :-( </p>");
-			console.log("ne radimo danas");
-		}
-		
-		function showPieces(){
-			var orderedItems=productsFromStorage.filter(item=>{
-				for(let index of itemsInBag){
-					if(item.id==index.id){
-						item.pieces=index.pieces;
-						console.log(item.pieces);
-						return true;
-					}
-				}
-				
-				return false;
-			});
-			showBag(orderedItems);
-			totalCalculator();
-
-		}
-		
-		function showBag(items){
-			htm = `<table border="1px solid">
-					<thead>	
-						<tr>
-							<th>No</th>
-							<th>Product name</th>
-							<th>Price per unit</th>
-							<th>Units</th>
-							<th>Total price per product</th>
-						</tr>
-					</thead>
-					<tbody>`;
-			for(let index of items){
-				htm += `<tr>
-							<td>${index.id}</td>
-							<td>${index.name}</td> 
-							<td>${index.price.new}</td>
-							<td>${index.pieces}</td>
-							<td>${totalPerUnit(index.price.new, index.pieces)}</td>
-							<td><input type="button" onclick="" value="Remove"/></td>
-						</tr>`;
-			}
-			$("#my-cart").html("<p>"+htm+"</p><div class='total'></div>");
-		}
-		//TOTAL PRICE PER UNIT
-		function totalPerUnit(price, units) {
-			return price * units;
-		}
-		
-		//TOTAL PRICE
-		function totalCalculator(){
-			var totalPrice=0;
-			itemsInBag.forEach(index=>{
-					let item =productsFromStorage.filter(x=>x.id==index.id);
-					totalPrice=totalPrice+(item[0].price.new*index.pieces);
-					console.log(index.id+" "+totalPrice);
-			});
-			$(".total").html("<p>Total price: "+totalPrice+"</p>");		
-		}
-
-		//ITEMS IN BAG
-		
-		
-		//REMOVE FROM BAG
-	/*	function deleteFromBag(id){
-			console.log("brisanje radi");
-			var productsFromCart=importFromLocStorage("cart");
-			let filterItem=productsFromCart.filter(index=>index.id!=id);
-			
-			if(filterItem.length==0){ localStorage.clear;
-				stockToLocStorage("cart", filterItem);
-			console.log("i drugi deo radi");
-			showBag(filterItem)
-			}
-			
-		}
-*/
-			//ADD TO CART ITEM
-	/*	$(document).ready(function(){
-				$("#order").hide();
-				$(".Add").click(function(e){
-					console.log("dodato u korpu");
-					e.preventDefault();
-					$("#order").show("fast");
-				});
-					
-		});*/
-			//POP-UP MY CART
-		$(document).ready(function(){
-			console.log("ucitavam");
-			$("#my-cart").hide();
-			$("#my-bag").click(function(e){
-				console.log("reagujem");
-				e.preventDefault();
-				$("#my-cart").toggle("fast");
-			});
-		});
-		
+		$("#gender").click(stockSortedValues);*/
+		//$("#brands").click(stockSortedValue(sort-brand, "brand"));
+	myCart();
+	function myCart(){
+    let productsInCart = importFromLStorage("cart");
+        
+        if(productsInCart == null){
+            EmptyCart();
+        }
+        else{
+            showCart();
+        }
 }
+function EmptyCart(){
+	html=`<i class="fas fa-dizzy" aria-hidden="true"></i><p><b>Unfortunately, your bag is empty :-( </b></p>
+	<i class="fa fa-exclamation-triangle" aria-hidden="true"></i>`;
+    $("#my-cart").html(html);
+    //$("#my-cart").html("");
+}
+function showCart(){
+    let allProducts = importFromLStorage("allProducts");
+    let productsInCart = importFromLStorage("cart");
+
+    let productsForDisplay = allProducts.filter(el => {
+        for(let pCart of productsInCart){
+            if(el.id == pCart.id){
+                el.qty = pCart.qty;
+                return true;
+            }
+        }
+        return false;
+    })
+	console.log(productsForDisplay);
+    printTable(productsForDisplay);
+}
+function printTable(products){
+    //console.log(products);
+    let html = `<table class="timetable_sub">
+    <thead>
+        <tr>
+            <th>No.</th>
+            <th>Product</th>
+            <th>Product Name</th>
+            <th>Price per Unit</th>
+            <th>Units</th>
+            <th>Total Price</th>
+            <th>Remove</th>
+        </tr>
+    </thead>
+    <tbody>`;
+    let total = 0;
+    for(let index of products){
+		
+        html += generateTr(index);
+        total = total + (index.price.new * index.qty);
+    }
+
+    html +=`    </tbody>
+    </table>
+	<div id="total-price"></div>`;
+	console.log("I work :)");
+	let htmlTotal=`<p>Total price:<b>${total} &euro;</b></p>`;
+    $("#my-cart").html(html);
+    $(".btn-remove").click(removeFromCart);
+    $("#total-price").html(htmlTotal);
+}
+
+function removeFromCart(){
+    let productId = $(this).data("id");
+
+    let productsInCart =importFromLStorage("cart");
+    let filtered = productsInCart.filter(index => index.id != productId);
+
+    if(filtered.length == 0){
+        localStorage.removeItem("cart");
+    }
+    else{
+        stockToLStorage("cart", filtered);
+    }
+    myCart();
+}
+function generateTr(p){
+    return  `<tr class="cart-item">
+    <td>${p.id}</td>
+    <td>
+        <a href="single.html">
+            <img src="${p.img.src}" style='height:100px' alt="${p.img.alt}" class="img-responsive">
+        </a>
+    </td>
+    <td>${p.name}</td>
+    <td>${p.price.new}&euro;</td>
+    <td>${p.qty}</td>
+    <td><b>${p.price.new * p.qty}&euro;</b></td>
+    <td>
+        <div class="card-item-button">
+            <div class=""><button class='btn-remove' data-id='${p.id}'>Remove</button> </div>
+        </div>
+    </td>
+</tr>`;
+}	
+
+function addToCart(){
+    let productId = $(this).data("id");
+    // console.log(idP)
+
+    let productsInCart =importFromLStorage("cart");
+
+    if(productsInCart == null){
+        addFirstItemToCart();
+        printNumberOfProducts();
+    }
+    else{
+        if(productIsAlreadyInCart()){
+            updateQty();
+        }
+        else{
+            addItemToCart();
+            printNumberOfProducts();
+        }
+    }
+
+
+    function addFirstItemToCart(){
+        let products = [
+            {
+                id: productId,
+                qty: 1
+            }
+        ];
+        stockToLStorage("cart", products);
+    }
+
+    function productIsAlreadyInCart(){
+        return productsInCart.filter(el => el.id == productId).length;
+    }
+
+    function updateQty(){
+
+        let productsLS = importFromLStorage("cart");
+
+        for(let p of productsLS){
+            if(p.id == productId){
+                p.qty++;
+                break;
+            }
+        }
+
+        stockToLStorage("cart", productsLS);
+    }
+
+    function addItemToCart(){
+        let productLS = importFromLStorage("cart");
+
+        productLS.push({
+            id: productId,
+            qty: 1
+        });
+
+        stockToLStorage("cart", productLS);
+    }
+}
+function printNumberOfProducts(){
+    let productsInCart = importFromLStorage("cart");
+
+    if(productsInCart == null){
+		let html=" ";
+        $("#items-in-cart").html(html);
+    }
+    else{
+        let number = productsInCart.length;
+		console.log(number);
+        $("#items-in-cart").html(number);
+    }
+}
+			//POP-UP MY CART
+			//console.log("ucitavam");
+		$("#my-cart").hide();
+		$("#navigation").click(pera);
+			//$("#my-cart").hide();
+		function pera(){
+				console.log("reagujem");
+				//e.preventDefault();
+				//$("#my-cart").addClass("popUp");
+				$("#my-cart").toggle("fast");
+			}
+		
+	//SLIDER
+	setInterval(slider, 4000);
+
+	var counter = 1;
+	function slider() {
+		document.querySelector("#slider img").src = "assets/img/slide" + counter + ".png";
+		counter++;
+		if (counter == 6) {
+					counter = 1;
+		}
+	}
+	slider();
+});
+
+//SCROLL TO TOP
+$(window).scroll(function(){
+	if($(this).scrollTop()>50){
+		$("#scrollUp").fadeIn(100);
+	}
+	else
+	{
+		$("#scrollUp").fadeOut(100);
+	}
+});
+$("#scrollUp").click(function(){
+	$("body, html").animate({scrollTop:0},500
+	);
+});
+//MENU HOVER
+	/*$("#navigation li a").hover(function(){
+		console.log("radi hover");
+	$(this).addClass("menuHover")
+		}
+	function(){
+		$(this).removeClass("menuHover")
+	}
+	);*/
+$("#brands").hide();
+$("#filterBrand").click(function(){
+	console.log("radimo filter");
+	$("#brands").slideToggle("slow");
+});
+
+function showRegistration(items){
+			let html=`<p> Send us your impressions </p><br/><div id="contactUs">`;
+				console.log("pera");
+			for(let index of items){
+				
+				html+=`<div class="text-tabs">
+							<input type="${index.value}" class="validation" title="Write a message down bellow" id="${index.name}" placeholder="${index.site}"/>
+							<p class="alert alert-danger mistake"><i>Value ${index.site} is not correct</i></p>
+					</div>`;
+			}
+			html+=`<form>
+					<div class="text-tabs">
+					<textarea class="form-control" name="comment" rows="5" cols="40" id="comment" placeholder="Write a comment" maxlength="250"></textarea>
+					<div id="counting">0/250</div>
+				</div>
+					<input type="button" id="btnSend" value="Send"/>
+				</form><br/>
+				</div>
+				<div class="cleaner"></div>`;
+			$("#main").html(html);
+			
+
+console.log("hol");
+
+
+//COUNTING CHARACTERS
+		document.getElementById("comment").addEventListener("keyup", function () {
+			document.querySelector("#counting").textContent = `${document.getElementById("comment").value.length}/250`;
+		});
+
+		//REGULAR EXPRESSION
+		document.querySelector("#btnSend").addEventListener("click", function (e)
+			{
+				e.preventDefault()
+				findErrors()
+				console.log("it works");
+			});
+}
+		function findErrors() {
+		var wrong = [];
+		let firstName, lastName, email, comments;
+		firstName = document.querySelector("#firstName");
+		lastName = document.querySelector("#lastName");
+		email = document.querySelector("#email");
+		comment = document.querySelector("#comment");
+		console.log(firstName, lastName);
+
+		let firstNameRegex = /^[A-ZĆČŽŠĐ][a-zčćžšđ]{2,14}$/;
+		let lastNameRegex = /^[A-ZĆČŽŠĐ][a-zčćžšđ]{2,18}$/;  
+		let emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
+		let commentRegex = /.{2,200}/;
+		let firstNameDone = false;
+		let lastNameDone = false;
+		let emailDone = false;
+		let commentDone = false;
+
+
+		function checkAll(itemValue, itemRegex, itemDone, type) {
+			if (itemRegex.test(itemValue.value)) {
+				itemDone = true;
+				console.log(itemValue.value+" je dobar");
+				if (itemValue.classList.contains("danger"))
+					itemValue.classList.remove("danger");
+					itemValue.nextElementSibling.classList.add("mistake");
+			}
+			else
+			{
+				wrong.push(type);
+				itemDone = false;
+				if (!itemValue.classList.contains("danger")){
+					itemValue.classList.add("danger");
+					itemValue.nextElementSibling.classList.remove("mistake");
+					console.log("a");
+				}
+				console.log(wrong);
+			}
+			if(wrong.length==0){
+				localStorage.setItem(type, itemValue.value);
+				console.log(itemValue);
+			}
+		}
+		
+		checkAll(firstName, firstNameRegex, firstNameDone, "first name")
+		checkAll(lastName, lastNameRegex, lastNameDone,"last name")
+		checkAll(email, emailRegex, emailDone, "email")
+		checkAll(comment, commentRegex, commentDone, "message")
+};

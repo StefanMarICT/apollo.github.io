@@ -1,0 +1,27 @@
+[
+{
+	"id": 1,
+	"link": "https://twitter.com/login",
+	"icons": "fa fa-twitter"
+},
+{
+	"id": 2,
+	"link": "https://www.instagram.com/",
+	"icons": "fa fa-instagram"
+},
+{
+	"id": 3,
+	"link": "https://www.youtube.com/watch?v=NjDTuucnvSI",
+	"icons": "fa fa-youtube"
+},
+{
+	"id": 4,
+	"link": "https://www.facebook.com/",
+	"icons": "fa fa-facebook"
+},
+{
+	"id": 5,
+	"link": "documentation.pdf",
+	"icons": "fa fa-file"
+}
+]

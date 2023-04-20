@@ -9,8 +9,8 @@
 		"brandId":1,
 		"genderId":1,
 		"price":{
-				"new":125,
-				"old":90
+				"new":90,
+				"old":190
 		}
 	},
 	{
@@ -23,8 +23,8 @@
 		"brandId":2,
 		"genderId":1,
 		"price":{
-				"new":110,
-				"old":89
+				"new":60,
+				"old":189
 		}
 	},
 	{
@@ -51,8 +51,8 @@
 		"brandId":3,
 		"genderId":1,
 		"price":{
-				"new":160,
-				"old":100
+				"new":100,
+				"old":170
 			}
 	},
 		{
@@ -65,13 +65,13 @@
 		"brandId":4,
 		"genderId":2,
 		"price":{
-				"new":120,
-				"old":40
+				"new":40,
+				"old":120
 			}
 	},
 		{
 		"id":6,
-		"name":"Dylan Blue - women",
+		"name":"Dylan Blue-femme",
 		"img":{
 			"src":"assets/img/dylan_blue_w.jpg",
 			"alt":"Versace Dylan Blue women edp 100ml"
@@ -79,13 +79,13 @@
 		"brandId":2,
 		"genderId":2,
 		"price":{
-				"new":150,
-				"old":90
+				"new":50,
+				"old":190
 			}
 	},
 	{
 		"id":7,
-		"name":"Linterdit",
+		"name":"L\'interdit",
 		"img":{
 			"src":"assets/img/linterdit.jpg",
 			"alt":"Givenchy Linterdit women edp 80ml"
@@ -108,7 +108,7 @@
 		"genderId":1,
 		"price":{
 				"new":80,
-				"old":55
+				"old":95
 			}
 	},
 	{
@@ -121,8 +121,8 @@
 		"brandId":4,
 		"genderId":2,
 		"price":{
-				"new":110,
-				"old":47
+				"new":90,
+				"old":147
 			}
 	},
 	{
@@ -135,7 +135,7 @@
 		"brandId":2,
 		"genderId":2,
 		"price":{
-				"new":200,
+				"new":100,
 				"old":113
 			}
 	},
@@ -163,7 +163,7 @@
 		"brandId":5,
 		"genderId":1,
 		"price":{
-				"new":220,
+				"new":120,
 				"old":199
 			}
 	},
@@ -178,7 +178,7 @@
 		"genderId":2,
 		"price":{
 				"new":90,
-				"old":67
+				"old":137
 			}
 	},
 	{
@@ -224,7 +224,7 @@
 			}
 	},
 	{
-		"id":7,
+		"id":18,
 		"name":"Olympea",
 		"img":{
 			"src":"assets/img/olympea_w.jpg",
@@ -234,6 +234,34 @@
 		"genderId":2,
 		"price":{
 				"new":109,
+				"old":null
+			}
+	},
+	{
+		"id":19,
+		"name":"Pi",
+		"img":{
+			"src":"assets/img/pi.jpg",
+			"alt":"Givenchy Pi women edp 100ml"
+		},
+		"brandId":5,
+		"genderId":2,
+		"price":{
+				"new":179,
+				"old":249
+			}
+	},
+	{
+		"id":20,
+		"name":"One million",
+		"img":{
+			"src":"assets/img/one_million_m.jpg",
+			"alt":"Paco Rabanne One million men edp 100ml"
+		},
+		"brandId":1,
+		"genderId":1,
+		"price":{
+				"new":80,
 				"old":null
 			}
 	}
