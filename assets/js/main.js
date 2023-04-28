@@ -71,7 +71,7 @@ function loading(){
 			 let html=`<div id="logo"><a href="index.html"><img src="assets/img/logo.png" alt="company logo"/></a></div>
 			 <div id="nav"><ul>`;
 			for(let index in items){
-				if(index==4){
+				if(index==3){
 					html+=`<li><div id="my-bag"><i id="pera2" class="fa fa-shopping-cart" aria-hidden="true"></i><span id="items-in-cart"></span></div></li>`;
 				}
 				/*if(index==1&&url!="/index.html"){
