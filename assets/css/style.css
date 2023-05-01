@@ -1,20 +1,17 @@
-*!
- * Start Bootstrap - Shop Homepage (https://startbootstrap.com/template/shop-homepage)
- * Copyright 2013-2020 Start Bootstrap
- * Licensed under MIT (https://github.com/StartBootstrap/startbootstrap-shop-homepage/blob/master/LICENSE)
- */
+
  :root {
     --primary: #E88F2A;
     --secondary: #FAF3EB;
     --light: #FFFFFF;
     --dark: #2B2825;
 }
+
 *{
 	margin:0;
 	padding:0;
 	box-sizing: border-box;
 }
- 
+
 body {
   padding-top: 2px;
 }
@@ -29,21 +26,173 @@ body {
 	width:100%;
 	padding-top:10%;
 }
+
 #logo{
 	float:left;
 	background:#2B2825;
 	width:40%;
 	padding-left:3%;
 }
+
 #logo img{
 	width:30%;
 }
 
-.Add{
-	background-color: #e7e7e7; 
-	color: black;
-	border-radius:8px;
-	padding: 8px 17px;
+#brands{
+	padding-left:13px;
+}
+
+#filterGender, #filterBrand, #sorting, #sorted{
+	padding:9px;
+}
+
+#sorted{
+	font-size:14px;
+	margin-top:9px;
+}
+
+.genderClass{
+	padding:5px;
+}
+
+.Add-sep {
+	padding: 25px 60px 25px 120px;
+}
+  
+.Add-sep:before {
+	background: rgba(0,0,0,0.15);
+}
+
+.Add {
+	background: #2ecc71;
+	color: #fff;
+	padding: 6px 13px;
+}
+  
+.Add:hover {
+	background: #27ae60;
+}
+  
+.Add:active {
+	background: #27ae60;
+	top: 2px;
+}
+  
+.Add:before {
+	position: absolute;
+	height: 100%;
+	left: 0;
+	top: 0;
+	line-height: 3;
+	font-size: 140%;
+	width: 60px;
+}
+  
+.btn-remove {
+	background: #e74c3c;
+	color: #fff;
+}
+  
+.btn-remove:hover {
+	background: #c0392b;
+}
+  
+.btn-remove:active {
+	background: #c0392b;
+	top: 2px;
+}
+  
+.btn-remove:before {
+	position: absolute;
+	height: 100%;
+	left: 0;
+	top: 0;
+	line-height: 3;
+	font-size: 140%;
+	width: 60px;
+}
+
+#send, #emptyCart, #btnSend{
+	border: 1px solid black;
+	font-family: 'Lato';
+	font-size: inherit;
+	color: inherit;
+	background: none;
+	cursor: pointer;
+	padding: 2px 8px;
+	display: inline-block;
+	margin: 15px 30px;
+	text-transform: uppercase;
+	letter-spacing: 1px;
+	font-weight: 50;
+	outline: none;
+	position: relative;
+	-webkit-transition: all 0.3s;
+	-moz-transition: all 0.3s;
+	transition: all 0.3s;
+}
+  
+#send:after, #btnSearch:after {
+	content: '';
+	position: absolute;
+	z-index: -1;
+	-webkit-transition: all 0.3s;
+	-moz-transition: all 0.3s;
+	transition: all 0.3s;
+}
+
+#emptyCart {
+	background: #e74c3c;
+	color: #fff;
+}
+  
+#emptyCart:hover {
+	background: #c0392b;
+}
+  
+#emptyCart:active {
+	background: #c0392b;
+	top: 2px;
+}
+  
+#emptyCart:before, #send:before, #btnSend:before, #btnSearch:before  {
+	position: absolute;
+	height: 100%;
+	left: 0;
+	top: 0;
+	line-height: 3;
+	font-size: 140%;
+	width: 60px;
+}
+
+#send, #btnSend{
+	background: #3498db;
+	color: #fff;
+}
+  
+#send:hover, #btnSend:hover, #btnSearch:hover {
+	background: #2980b9;
+}
+  
+#send:active, #btnSend:active, #btnSearch:hover {
+	background: #2980b9;
+	top: 2px;
+}
+  
+#btnSearch{
+	border: 1px solid black;
+	background: #3498db;
+	color: #fff;
+	font-family: 'Lato';
+	font-size: inherit;
+	cursor: pointer;
+	padding: 2px 8px;
+	display: inline-block;
+	margin: 15px 30px;
+	text-transform: uppercase;
+	letter-spacing: 1px;
+	font-weight: 50;
+	outline: none;
 }
 
 #navigation ul {
@@ -53,13 +202,38 @@ body {
 	padding-top:8%;
 	padding-right:5%;
 	text-align:center;
-
 }
+
 #main{
 	width:100%;
-	margin-top:20%;
+	/*margin-top:10%;*/
 	background:#FAF3EB;
 }
+
+#mainPart{
+	width:100%;
+	margin-top:10%;
+	background:#FAF3EB;
+}
+
+#main1{
+	margin-top: 10px;
+}
+#main1, #main3{
+	width:100%;
+	float:left;
+	background:#FAF3EB;
+}
+
+#main1 h3{
+	padding:3px;
+	margin-left:20px;
+}
+
+#main3{
+	margin-top:100px;
+}
+
 ul li {
 	display:inline-block;
 	padding:10px;
@@ -69,9 +243,6 @@ ul li {
 	font-size: 16px;
 	text-align:center;
 }
-
-
-
 
 ul li a{
 	text-decoration:none;
@@ -84,14 +255,10 @@ ul li a:hover{
 	
 }
 
-
-/*.brands input[type="checkbox"]{
-	cursor:pointer;
-}*/
-
 .fa-shopping-cart{
     color:white;
 }
+
 .fa-shopping-cart:hover{
 	color:yellow;
 }
@@ -99,9 +266,11 @@ ul li a:hover{
 #items-in-cart{
 	color:white;
 }
+
 #items-in-cart:hover{
 	color:yellow;
 }
+
 .card img { 
   height: 190px;
   width: auto !important;
@@ -115,6 +284,7 @@ ul li a:hover{
 	padding:4px;
 	text-align:center;
 }
+
 body > .container {
   min-height: 100vh;
 }
@@ -130,6 +300,7 @@ datalist {
 .card-body{
 	padding:5px;
 }
+
 option {
   padding: 0;
 }
@@ -138,21 +309,25 @@ input[type="range"] {
   width: 200px;
   margin: 0;
 }
+
 #main{
 	width:100%;
 }
+
 #class-left{
 	background:#FAF3EB;
 	float:left;
 	max-width:17%;
 	padding:5px;
 }
+
 #row{
 	padding-left:5px;
 	float:left;
 	background:white;
 	width:77%;
 }
+
 .loading { 
  width: 100%; 
  height: 100vh; 
@@ -170,36 +345,38 @@ input[type="range"] {
 .danger{
 	border:2px solid red;
 }
+
 .mistake{
 	display:none;
 }
 
 #my-cart {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 500px;
-            max-height: 2000px;
-            text-align: center;
-            background-color:  #FAF3EB;
-            box-sizing: border-box;
-            padding: 10px;
-            z-index: 100;
-			display:block;
-			border-radius:25px;
-			border:1px solid black;
-			
-            /*visibility: hidden;*/
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 500px;
+    max-height: 2000px;
+    text-align: center;
+    background-color:  #FAF3EB;
+    box-sizing: border-box;
+    padding: 10px;
+    z-index: 100;
+	display:block;
+	border-radius:25px;
+	border:1px solid black;			
 }
+
 #close{
 	padding-bottom:10px;
 	width:100%;
 }
+
 #closing{
 	float:right;
 	padding:5px;
 }
+
 .popUp .show{
 	visibility:visible;
 	-webkit-animation: fadeIn 1s;
@@ -229,6 +406,7 @@ input[type="range"] {
 	 bottom: 14px;
 	 transition: background 0.5s;
 }
+
 #scrollUp:focus {
 	 background: rgba(0, 0, 0, 0.2);
 	 color: #fff;
@@ -247,21 +425,117 @@ input[type="range"] {
 #contactUs{
 	float:left;
 	margin-left:15px;
-	max-width:50%;
+	padding-left:10px;
+	max-width:40%;
 }
+
 #main p{
 	margin-left:10px;
 	padding:5px;
 }
-.text-tabs{
-	padding:4px;
+
+.form-control{
+	font-size: 18px;
 }
 
-#btnSend{
-	background-color: #e7e7e7; 
-	color: black;
-	border-radius:8px;
-	padding: 8px 17px;
+.text-tabs{
+	margin:8px;
+}
+
+.text-tabs input{
+		font-size:18px;
+		padding:10px 10px 10px 5px;
+		display:block;
+		width:300px;
+		border-bottom:1px solid #757575;
+}
+	input:focus{
+		outline:none; 
+	}
+
+.bar{ 
+		position:relative; 
+		display:block; width:300px; 
+}
+
+.bar:before, .bar:after{
+		content:'';
+		height:2px; 
+		width:0;
+		bottom:1px; 
+		position:absolute;
+		background:#5264AE; 
+		transition:0.2s ease all; 
+		-moz-transition:0.2s ease all; 
+		-webkit-transition:0.2s ease all;
+}
+
+.bar:before {
+	  	left:50%;
+}
+	
+.bar:after {
+	 	 right:50%; 
+}
+	
+input:focus ~ .bar:before, input:focus ~ .bar:after {
+		 width:50%;
+}
+	
+.highlight {
+		position:absolute;
+		height:60%; 
+		width:100px; 
+		top:25%; 
+		left:0;
+		pointer-events:none;
+		opacity:0.5;
+}
+	  
+input:focus ~ .highlight {
+		-webkit-animation:inputHighlighter 0.3s ease;
+		-moz-animation:inputHighlighter 0.3s ease;
+		animation:inputHighlighter 0.3s ease;
+}
+
+#txSearch{
+		font-size:14px;
+		padding:10px 4px 4px 4px;
+		display:block;
+		width:170px;
+		border:none;
+		border-bottom:1px solid #757575;
+		margin-bottom:8px;
+}
+
+input:focus{
+		outline:none; 
+}
+
+.shortBar{ 
+		position:relative; 
+		display:block; 
+		width:50px; 
+}
+
+.shortBar:before, .shortBar:after{
+	  content:'';
+	  height:2px; 
+	  width:0;
+	  bottom:1px; 
+	  position:absolute;
+	  background:#5264AE; 
+	  transition:0.2s ease all; 
+	  -moz-transition:0.2s ease all; 
+	  -webkit-transition:0.2s ease all;
+}
+
+.shortBar:before {
+	  left:50%;
+}
+
+.shortBar:after {
+	  right:50%; 
 }
 
 #author{
@@ -277,7 +551,6 @@ input[type="range"] {
 	text-align: center;
 }
 
-
 #author #jspic{
 	width:40px;
 	height:30px;
@@ -288,12 +561,14 @@ input[type="range"] {
 	border-radius: 100%;
 	float:right;
 	padding:20px;
-	margin-right:20px;
+	margin-top:50px;
+	margin-right:20px;;
 }
 
 #textAuthor{
 	float: left;
 	margin:30px;
+	margin-top:80px;
 	padding: 30px;
 	text-align:justify;
 	font-family:'Times New Roman';
@@ -301,3 +576,10 @@ input[type="range"] {
 	width:50%;
 	border:2px solid black;
 }
+#main2{
+	float:right;
+	width: 50%;
+	margin:10px;
+	padding:10px;
+}
+
